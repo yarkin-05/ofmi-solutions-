@@ -1,0 +1,63 @@
+
+
+For the BFS function :)
+
+the BFS function is a void function that returns no value, and recieves no arguments. It is the function responsable for filling the "posicion" struct of the coobayas. 
+
+the function defines a queue (type posicion(struct)) names Q. It then defines two arrays, which are the ways the posicion of the cobaya could move. For example, the x posicion can move right or left, but not up or down.
+
+The Q then pushes the posicion of the lechuga to it. This posicion contains the coordinates of the Lechuga, and this is at the front of the Q.
+
+Then, the coordinates of the lechuga are marked as true, this is important, since marking them as true ensures that it does not get an infinite loop, since it checks that the cell is only visited once. 
+
+the loop then starts, with the while(!Q.empty), this condition sets it for ensuring we visits/mark all the cells that are possible to reach within the walls and that are all the possible paths form the lechuga coordinates. This condition will be done when we check have marked all the cells as true, therefore not adding anyone, and causing the Q to be empty, finishing the while loop
+
+"Next, we add the starting vertex (the lettuce) to the queue and mark it as visited. We also start a loop that will continue until we have explored all the vertices that are reachable from the starting vertex"
+
+
+As an important note, the actual variable will still exist, since we are not popping the actual, but the Q.front() since it is marked as visited.
+
+Then, we compare the actual values with the tablero, and if tablero[actual.i][actual.j] = 1, it will then be added to the coobayas vector. This works even tho the distance is then initialized because the distance from the lettuce is 0 casillas away from itself.
+
+``` lechuga = posicion{i, j, 0}; ````
+
+then, the for loop starts and it can itirate 4 times over the dx and dy arrays, since they are the possible ways a coobaya can move, thus we are checking them that way. 4 inputs are added to the posicion siguiente, which are the 4 ways in which we can move (up, down, right, left), this also adds to the distance, which makes sense since the distance from the lechuga is going to increase :).
+
+then, we check if the siguiente(the four times this are generated) are within the walls (which are represented by the 0 - N and 0 - M), and if it isn't equal to pared (-1), and if the vertice is not marked as visited. If the if happens to be true, we add the siguiente coordinate to the Q. We finish it by marking the casilla as true :) 
+
+________________________________________
+
+the int contarCobayas() recieves no parameter and returns the amount of cobaya that have not eaten
+
+first, we initialize the lechuga_restante to be equal to the lechuga value in the tablero. 
+We then initialize t and i = 0 and start the loop.
+
+The while loop will run as long as i<cobayas.size() && and there is lechuga_restante for them to eat.
+
+then, lechuga_restante is reduced. 
+
+```lechuga_restante -= i * (cobayas[i].distancia - t - 1); ``` this serves for when the distance is not the same
+
+where i represents the coobayas that have eaten; 
+
+cobayas[i].distancia -> represents the distance of the i-th cobaya from the lettuce.
+
+-1 -> so the -1 is like reserving the 1 units for the current cobaya to use in the while loop
+
+
+t -> represents the distance of the previous cobaya that have already arrived at the lettuce. This way, we can calculate and take care of the cobayas that are at the same distance from each other. 
+
+
+t is a variable that keeps track of the previous distance of the cobayas that have already reached the lettuce. This way, we can calculate the number of lettuces that will be consumed by the cobayas at the same distance from the lettuce. The reason that t is defined later as a valid distance value, is cause if you define after, you would be comparing the distance of a cobaya that does not exist, thus, spoiling the code. 
+
+lechuga_restante -= i * (cobayas[i].distancia - t - 1); would be ignored for the first iteration, since i = 0, and the t=0, so it would be useless to give it much thinking. Then, the t is defined with the value of the first cobaya's distance. And then j = i, this does not matter in the first iteration because i = 0. 
+
+The thing changes when the code enters the while loop, since this is used for the cobayas with the same distance one from another, (Its important if the cobayas.size() - 1 == lechuga, 1 cobaya will be left without lechuga because there is not enough for all, even when they are at the same distance), the first cobaya[0], eats, and 1 unit will be subtracted from the cobaya, and the i increases, meaning it is time to check for the second (cobaya[1], since this is zero-indexed). 
+
+if the while loop is not met (because the coobayas are not at the same distance (so, cobaya[1] > t, with t being the distance from the cobaya[0]), it exits the while loop, and then subtracts 1 from the lechuga because the first cobaya eats again since the other one does not arrive. 
+
+if there is still lechuga left, that is when the formula comes in, which will calculate the is used to calculate the amount of lettuce eaten by the cobayas that arrived earlier than the current one(the distance takes care if, by multiplying the number of cobayas with the same distance (i) by the difference in distance between the current cobaya and the first cobaya with the same distance (cobayas[i].distancia - t - 1) ), also, this formula does not subtract anything if the distance is different only by 1. Then, the other while loop enters, subtracting 1 from the lettuce, and if the lechuga is = 0, the while loop will and the lechuga-j will make it negative.
+
+The important parts of this is mainly the i part, since this is the variable that calculates the amount of cobayas that have eaten.
+
+______________finished :) _______________
